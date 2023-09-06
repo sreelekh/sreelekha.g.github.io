@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getResults } from "git";
 
 const ResultsPage = () => {
-  const [results, setResults] = useState(['https://github.com/sreelekh/INCAD']);
+  const [results, setResults] = useState([]);
 
   const getLiveResults = async () => {
     const results = await getResults();
