@@ -5,25 +5,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import PortfolioPreview from '../components/PortfolioPreview.astro';
 import type { Project } from '../types';
-import About from 'about.astro';
 
-const MainPage = () => {
-  return (
-    <div>
-      <h1>Main Page</h1>
-      <ul>
-        <li>
-          <Link href="/about">About</Link>
-        </li>
-        <li>
-          <Link href="/contact">Contact</Link>
-        </li>
-      </ul>
-    </div>
-  );
-};
-
-export default MainPage;
 // Data Fetching: List all Markdown posts in the repo.
 const projects = await Astro.glob<Project>('./project/**/*.md');
 const featuredProject = projects[0]!;
@@ -65,7 +47,7 @@ const nickname = 'Lekha';
 
 			.gradient,
 			.gradient2 {
-				background-image: url('/assets/mesh-gradient.jpg');
+				background-image: url('/assets/Background/three-ideal-scenarios-for-anomaly-detection-with-machine-learning-1568x882.jpg');
 				background-size: cover;
 				pointer-events: none;
 				mix-blend-mode: screen;
