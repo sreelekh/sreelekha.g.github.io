@@ -1,94 +1,150 @@
-/* Global variables */
-:root {
-	/* Colors */
-	--c-black: #05091e;
-	--c-blue: #46b4ff;
-	--c-gray: #90aab7;
-	--c-green: #9ef2cb;
-	--c-pink: #ffb8d9;
-	--c-orange: #ffb7a3;
-	--c-yellow: #ffdace;
-	--c-white: #fff;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-	/* Fonts */
-	--f-u18: 11.390625em;
-	--f-u17: 9.950627481136905em;
-	--f-u16: 8.692673779389363em;
-	--f-u15: 7.59375em;
-	--f-u14: 6.63375165409127em;
-	--f-u13: 5.795115852926242em;
-	--f-u12: 5.0625em;
-	--f-u11: 4.422501102727513em;
-	--f-u10: 3.8634105686174953em;
-	--f-u9: 3.375em;
-	--f-u8: 2.9483340684850083em;
-	--f-u7: 2.575607045744997em;
-	--f-u6: 2.25em;
-	--f-u5: 1.9655560456566725em;
-	--f-u4: 1.7170713638299977em;
-	--f-u3: 1.5em;
-	--f-u2: 1.3103706971044482em;
-	--f-u1: 1.1447142425533319em;
-	--f-d1: 0.8735804647362989em;
-	--f-d2: 0.7631428283688879em;
-	--f-d3: 0.6666666666666666em;
-	--f-d4: 0.5823869764908659em;
-	--f-d5: 0.5087618855792586em;
-	--f-d6: 0.4444444444444444em;
-	--f-d7: 0.3882579843272439em;
-	--f-d8: 0.3391745903861724em;
-	--f-d9: 0.2962962962962963em;
-	--f-d10: 0.2588386562181626em;
-	--f-d11: 0.22611639359078162em;
-	--f-d12: 0.19753086419753085em;
-	--f-d13: 0.17255910414544176em;
-	--f-d14: 0.15074426239385438em;
-	--f-d15: 0.13168724279835392em;
-	--f-d16: 0.11503940276362785em;
-	--f-d17: 0.10049617492923625em;
-	--f-d18: 0.0877914951989026em;
+@layer base {
+  @font-face {
+    font-family: "Atkinson";
+    src: url("/fonts/atkinson-regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: "Atkinson";
+    src: url("/fonts/atkinson-bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+}
 
-	--t-fg: var(--c-black);
-	--t-bg: var(--c-white);
-	--t-subdue: var(--c-gray);
-	--t-active: var(--c-blue);
+html {
+  overflow-y: scroll;
+  color-scheme: light;
+  background-color: white;
+  font-family: "Atkinson", sans-serif;
+  
+}
+
+html.dark {
+  color-scheme: dark;
+  background-color: black;
+}
+
+html,
+body {
+  @apply h-full w-full antialiased;
+  @apply bg-white dark:bg-black;
+  @apply text-black/75 dark:text-white/75;
 }
 
 body {
-	margin: 0;
-	color: var(--t-fg);
-	font-family: 'Inter', 'system-ui', sans-serif;
+  @apply relative flex flex-col;
 }
 
-* {
-	box-sizing: content-box;
+main {
+  @apply flex flex-col flex-1 bg-white dark:bg-black;
 }
 
-img {
-	max-width: 100%;
-	height: auto;
+header {
+  @apply border-b;
+  @apply transition-all duration-300 ease-in-out;
 }
 
-a {
-	color: var(--t-active);
+header:not(.scrolled) {
+  @apply bg-transparent border-transparent;
 }
 
-h1 {
-	font-size: var(--f-u8);
+header.scrolled {
+  @apply bg-white/75 dark:bg-black/50;
+  @apply border-black/10 dark:border-white/25;
+  @apply backdrop-blur-sm saturate-200;
 }
 
-.button {
-	display: inline-block;
-	border: 3px solid currentColor;
-	padding: 0.5em 1em;
-	font-weight: 700;
-	text-transform: uppercase;
+article {
+  @apply prose dark:prose-invert max-w-full pb-12;
 }
 
-.wrapper {
-	max-width: 80em;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 2rem;
-	padding-right: 2rem;
+.page-heading {
+  @apply font-semibold text-black dark:text-white;
+}
+
+.blend {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/** Light theme particles on home page */
+@keyframes animateParticle {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+/** styles for public /animation.js */
+.animate {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+article img {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: block;
+  margin: 0 auto;
+}
+
+/**
+ * TWINKLE STARS
+ */
+
+ #twinkle-star.template {
+  @apply absolute -left-full; /* hide offscreen */
+}
+
+#twinkle-star.twinkle {
+  @apply animate-twinkle; /* defined in tailwind.config */
+}
+
+
+/**
+ * Meteors
+ */
+
+#meteors .shower {
+  @apply absolute inset-0 top-0;;
+  @apply left-1/2 -translate-x-1/2;
+  @apply w-screen aspect-square;
+}
+
+#meteors .meteor {
+  @apply animate-meteor; /* defined in tailwind.config */
+  @apply absolute top-1/2 left-1/2 w-px h-[75vh];
+  @apply bg-gradient-to-b from-white to-transparent;
+}
+
+#meteors .shower.ur {
+  @apply rotate-45;
+}
+
+#meteors .shower.dr {
+  @apply rotate-135;
+}
+
+#meteors .shower.dl {
+  @apply rotate-225;
+}
+
+#meteors .shower.ul {
+  @apply rotate-315;
 }
